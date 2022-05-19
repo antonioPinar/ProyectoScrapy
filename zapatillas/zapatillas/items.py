@@ -9,4 +9,6 @@ import scrapy
 class ZapatillasItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    
+    #info del producto
+    linea = scrapy.Field()
