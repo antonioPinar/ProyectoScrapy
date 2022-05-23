@@ -12,9 +12,12 @@ BOT_NAME = 'scrapeo_ropa'
 SPIDER_MODULES = ['scrapeo_ropa.spiders']
 NEWSPIDER_MODULE = 'scrapeo_ropa.spiders'
 
+#metodos y variables para evitar ser bloqueados por sitios web con anti-rastreo
+CLOSESPIDER_PAGECOUNT = 100
+CLOSESPIDER_PAGECOUNT = 3
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'scrapeo_ropa (+http://www.yourdomain.com)'
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
