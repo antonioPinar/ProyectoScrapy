@@ -20,6 +20,7 @@ class spiderPrendas(scrapy.Spider):
         producto = {}
         producto['nombre'] = response.xpath("//aside/div/div/h5/text()").get()
         producto['linea'] = response.xpath("//aside/div/div/h1/text()").get()
+        producto['precio'] = response.xpath("//aside/div/div/div[1]/text()").get()
         self.productos.append(producto)
 
         yield {
