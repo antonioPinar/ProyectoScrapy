@@ -23,24 +23,31 @@ class spiderPrendas(scrapy.Spider):
     def datos_zapas(self, response):
 
         producto = {}
-        #añadimos todos los datos al diccionario
-        producto['marca'] = "nike"
-        producto['linea'] = response.xpath("//aside/div/div/h1/text()").get()
-        producto['modelo'] = response.xpath("//aside/div/div/h5/text()").get()
-        producto['descripcion'] = response.xpath("//aside/div/div[1]/div[3]/p/text()").get()
-        producto['precio'] = response.xpath("//aside/div/div/div[1]/text()").get()
-        producto['fecha_salida'] = response.xpath("//aside/div/div[1]/div[2]/div[@class = 'available-date-component']/text()").get()
-        producto['imagen'] = response.xpath("//div[@role = 'listbox']/div[3]/figure/img/@src").get()
-        #variable para iterar con los links
-        #indice = len(self.productos)
-        #producto['url'] = links[len(self.productos)]
-        
-        self.productos.append(producto) 
+        #filtramos que los datos que queremos guardar sean zapatillas
+        if response.xpath("//head/meta[@name='description'][@content='Echa un vistazo a la colección de ropa Nike x CACT.US CORP.']").get() == None:
+
+            #añadimos todos los datos al diccionario
+            producto['marca'] = "nike"
+            producto['linea'] = response.xpath("//aside/div/div/h1/text()").get()
+            producto['modelo'] = response.xpath("//aside/div/div/h5/text()").get()
+            producto['descripcion'] = response.xpath("//aside/div/div[1]/div[3]/p/text()").get()
+            producto['precio'] = response.xpath("//aside/div/div/div[1]/text()").get()
+            producto['fecha_salida'] = response.xpath("//aside/div/div[1]/div[2]/div[@class = 'available-date-component']/text()").get()
+            producto['imagen'] = response.xpath("//div[@role = 'listbox']/div[3]/figure/img/@src").get()
+            #variable para iterar con los links
+            #indice = len(self.productos)
+            #producto['url'] = links[len(self.productos)]
+            
+            self.productos.append(producto) 
 
         yield {
             'zapas' : producto,
             'total' : len(self.productos)
         }
+
+
+    def depurar_datos(diccionario):
+        diccionario
     
 
         
