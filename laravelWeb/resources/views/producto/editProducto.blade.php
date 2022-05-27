@@ -27,6 +27,10 @@
                                     <input class="form-control h-auto py-4 px-4 bg-light-brown" type="text" name="descripcion" id="descripcione"/>
                                   </div>
                                   <div class="form-group">
+                                  <label class="font-weight-bolder text-dark">Cantidad</label>
+                                  <input class="form-control h-auto py-4 px-4 bg-light-brown" type="text" name="cantidad" required/>
+                                </div>
+                                  <div class="form-group">
                                     <label class="font-weight-bolder text-dark">Imagen del Producto <span class="text-muted">(opcional)</span></label>
                                     <input class="form-control h-auto py-4 px-4" type="file" accept="image/png, image/jpg, image/jpeg" name="img" id="imge"/>
                                   </div>

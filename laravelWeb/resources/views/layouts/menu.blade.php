@@ -106,7 +106,7 @@
                         @endif
                     </a>
                 </li>
-                @endif
+            @endif
         </ul>
         <!--end::Menu Nav-->
     </div>
