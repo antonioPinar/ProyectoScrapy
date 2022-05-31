@@ -4,18 +4,18 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="d-flex flex-column-fluid">
         <div class="container">
+            
             <div class="row">
                 <!--begin::Col-->
-                @foreach($productos as $producto)
+                @foreach ($productos as $producto)
                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                     <!--begin::Card-->
                     <div class="card card-custom gutter-b card-stretch">
                         <!--begin::Body-->
                         <div class="card-body pt-4">
-                            <form method="POST" action="{{ route('add_prod', $producto->id) }}" enctype="multipart/form-data"> <!-- llama al addprod(CarritoController) para guardar la info en la bd-->
+                            <form method="POST" action="{{ route('add_product') }}" enctype="multipart/form-data"> <!-- llama al store para guardar la info en la bd-->
                                 {{ csrf_field() }}
                                 <input type="hidden" value="{{ $producto->id }}" id="idp" name="idp">
-                                <input type="hidden" value="1" id="cantidad_prod" name="cantidad_prod">
                             <!--begin::User-->
                             <div class="d-flex align-items-end mb-7">
                                 <!--begin::Pic-->
@@ -28,6 +28,7 @@
                                         </div>
                                     </div>
                                     <!--end::Pic-->
+
                                     <!--begin::Title-->
                                     <div class="d-flex flex-column">
                                         <a href="#" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{$producto->titulo}}</a>
@@ -54,11 +55,11 @@
                                     <span class="text-dark-75 font-weight-bolder mr-2">Precio:</span>
                                     <span class="text-muted font-weight-bold">{{$producto->precio}} €</span>
                                     <input type="hidden" value="{{$producto->precio}}" id="precio" name="precio">
-                                    <input type="hidden" value="{{$producto->total}}" id="total" name="total">
                                 </div>
                             </div>
                             <!--end::Info-->
                             <button type="submit" class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4">Agregar al Carrito</button>
+                            
                         </form>
                         </div>
                         <!--end::Body-->
@@ -71,6 +72,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- menu carrito compra-->
 <div id="kt_quick_cart" class="offcanvas offcanvas-right p-10 offcanvas-off">
@@ -89,26 +91,24 @@
         <div class="offcanvas-wrapper mb-5 scroll-pull scroll ps ps--active-y" style="height: 240px; overflow: hidden;">
             <!--begin::Item-->
             
-            @foreach($items as $item)
+            @foreach($carrito as $item)
             <div class="d-flex align-items-center justify-content-between py-8">
                 <div class="d-flex flex-column mr-2">
                     <a href="#" class="font-weight-bold text-dark-75 font-size-lg text-hover-primary">{{$item->titulo}}</a>
                     <div class="d-flex align-items-center mt-2">
-                        <span class="font-weight-bold mr-1 text-dark-75 font-size-lg">{{$item->total}}€</span>
+                        <span class="font-weight-bold mr-1 text-dark-75 font-size-lg">{{$item->precio}}€</span>
                         <span class="text-muted mr-1">for</span>
-                        <span class="font-weight-bold mr-2 text-dark-75 font-size-lg cantProd" id="cantProd"> {{$item->cantidad_prod}} </span>
-
-                        <a href="{{ route('minus_prod', $item->id) }}" class="btn btn-xs btn-light-success btn-icon mr-2">
-                            <input type="hidden" value="1" id="cantidad_prod" name="cantidad_prod">
+                        <span class="font-weight-bold mr-2 text-dark-75 font-size-lg">{{$item->cantidad}}</span>
+                        <a href="#" class="btn btn-xs btn-light-success btn-icon mr-2">
                             <i class="ki ki-minus icon-xs"></i>
                         </a>
-                        <a href="#" class="btn btn-xs btn-light-success btn-icon bt_suma">
+                        <a href="#" class="btn btn-xs btn-light-success btn-icon">
                             <i class="ki ki-plus icon-xs"></i>
                         </a>
                     </div>
                 </div>
                 <a href="#" class="symbol symbol-70 flex-shrink-0">
-                    <img src="assets/media/products/{{$item->img}}" title="" alt="">
+                    <img src="assets/media/products/{{$item->img}}" class="rounded mx-auto d-block" title="" alt="">
                 </a>
             </div>
             @endforeach
@@ -126,16 +126,11 @@
                 <span class="font-weight-bolder text-dark-50 text-right">{{$totalCompra}}€</span>
             </div>  
             <div class="text-right">
-                <a href="{{route('comprar_orden')}}" class="btn btn-primary text-weight-bold">Place Order</a>
+                <button type="button" class="btn btn-primary text-weight-bold">Place Order</button>
             </div>
         </div>
         <!--end::Purchase-->
     </div>
     <!--end::Content-->
 </div>
-@endsection
-
-@section('scripts')
-
-<script src="{{url('/assets/js/products.js')}}"></script>
 @endsection

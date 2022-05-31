@@ -10,15 +10,13 @@
             <div class="d-flex align-items-center">
                 <div class="bg-light-graybrown rounded p-2">
 
-                        
+                        <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1" id="kt_quick_cart_toggle">
                             @if(Request::is('view_producto*'))
-                            <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1" id="kt_quick_cart_toggle">
                                 <a href="#" class="btn font-weight-bold mr-2">
                                     <i class="icon-2x text-dark-50 flaticon2-shopping-cart-1"></i>
                                 </a>
-                            </div>
-                            @endif
-                        
+                                @endif
+                        </div>
 
                     <span class="color-brown font-size-base font-weight-bold mr-2">Hoy:</span>
                     <span class="color-blue font-size-base font-weight-bolder">
