@@ -21,19 +21,19 @@ class ScrapeoRopaPipeline(object):
     def process_item(self, item, spider):
         # sentencia sql
         sql_pagina = """
-        insert into pagina(URL) VALUES(%s)
+        insert into pagina(URL) VALUES('%s');
         """
 
         sql_zapatilla = """
         insert into producto(MARCA, LINEA, MODELO, DESCRIPCION, PRECIO, FECHA_SALIDA, IMAGEN, ID_PAGINA)
-            VALUES(%s, %s, %s, %s, %s, %s, %s,(select id from pagina where url = %s))
+            VALUES('%s', '%s', '%s', '%s', %s, '%s', %s,(select id from pagina where url = '%s'));
         """
         # Realizar la inserción de datos en la base de datos
         self.cursor.execute(sql_pagina,(item.get('url')))
         # Enviar, no se puede guardar en la base de datos sin enviar
         
-        self.cursor.execute(sql_zapatilla,(item.get('marca'), item.get('linea'), item.get('modelo'), item.get('descripcion'), item.get('precio'),
-                                            item.get('fecha_salida'), item.get('imagen'), item.get('url')))
+        self.cursor.execute(sql_zapatilla,(item.get('marca'), item.get('linea'), item.get('modelo'), item.get('descripcion'), 12,
+                                            "2020-10-02 7:00", item.get('imagen'), item.get('url')))
 
         self.conn.commit()
 
