@@ -12,12 +12,18 @@ BOT_NAME = 'scrapeo_ropa'
 SPIDER_MODULES = ['scrapeo_ropa.spiders']
 NEWSPIDER_MODULE = 'scrapeo_ropa.spiders'
 
+#habilitar extraccion de respuestas fallidas
+HTTPERROR_ALLOWED_CODES  =[404]
+
 #metodos y variables para evitar ser bloqueados por sitios web con anti-rastreo
 CLOSESPIDER_PAGECOUNT = 100
 CLOSESPIDER_PAGECOUNT = 3
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0"
+
+#importar a bbdd
+ITEM_PIPELINES = {'scrapeo_ropa.pipelines.ScrapeoRopaPipeline': 300}
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
