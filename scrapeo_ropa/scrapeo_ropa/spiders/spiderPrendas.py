@@ -58,9 +58,10 @@ class spiderPrendas(scrapy.Spider):
         zapatilla = ScrapeoRopaItem()
 
         #depuramos el precio
-        precio = diccionario['precio'].split('€')
-        float(precio[0])
-        zapatilla['precio'] = precio[0]
+        precio = diccionario['precio'].replace(",", ".")
+        precio = precio[:-2]
+        float(precio)
+        zapatilla['precio'] = precio
 
         #depuramos fecha
         numerosFecha = re.findall('[0-9]+', diccionario['fecha_salida'])
