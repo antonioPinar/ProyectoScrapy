@@ -29,7 +29,7 @@ class spiderPrendas(scrapy.Spider):
 
         producto = {}
         #filtramos que los datos que queremos guardar sean zapatillas
-        if response.xpath("//head/meta[@name='description'][@content='Echa un vistazo a la colección de ropa Nike x CACT.US CORP.']").get() == None:
+        if response.xpath("//head/meta[@content = 'FOOTWEAR']").get() != None:
 
             #añadimos todos los datos al diccionario
             producto['marca'] = "nike"
@@ -39,23 +39,21 @@ class spiderPrendas(scrapy.Spider):
             producto['precio'] = response.xpath("//aside/div/div/div[1]/text()").get()
             producto['fecha_salida'] = response.xpath("//aside/div/div[1]/div[2]/div[@class = 'available-date-component']/text()").get()
             producto['imagen'] = response.xpath("//div[@role = 'listbox']/div[3]/figure/img/@src").get()
+            producto['url'] = None
 
             #variable para iterar con los links
             #indice = len(self.productos)
             #producto['url'] = links[len(self.productos)]
             
             self.productos.append(producto)
-            #self.depurar_datos(producto)
+            productoFinal = self.depurar_datos(producto)
 
-        yield {
-            'zapas' : producto,
-            'total' : len(self.productos)
-        }
+        yield productoFinal
 
 
     def depurar_datos(self, diccionario):
 
-        zapatilla = ScrapeoRopaItem()
+        zapatilla = {}
 
         #depuramos el precio
         precio = diccionario['precio'].replace(",", ".")
@@ -77,9 +75,7 @@ class spiderPrendas(scrapy.Spider):
 
         #cosntruimos la fecha entera
         stringFecha = f"{anioActual.year}-{numerosFecha[1]}-{numerosFecha[0]} {numerosFecha[2]}:{numerosFecha[3]}"
-        fechaFinal = datetime.datetime.strptime(stringFecha, "%Y-%m-%d %H:%M")
-        #la añadimos a nuestro objeto
-        zapatilla['fecha_salida'] = fechaFinal
+        zapatilla['fecha_salida'] = stringFecha
 
         #depuramos texto en linea modelo y descripcion
         #if '\xa0' in diccionario['linea']:
@@ -89,11 +85,21 @@ class spiderPrendas(scrapy.Spider):
         #if '\xa0' in diccionario['descripcion']:
         #    diccionario['descripcion'] = re.sub("\xa0", " ", diccionario['descripcion'])
 
+        #recogemos el link de la página
+        #dividimos el nombre del modelo, ya que este nombre aparece en los links
+        modelo = diccionario['modelo'].lower()
+        modelo = modelo.replace(" and", "")
+        modelo = modelo.replace(" ", "-")
+        for link in self.links:
+            if modelo in link:
+                zapatilla['url'] = link
+
         zapatilla['linea'] = diccionario['linea']
         zapatilla['modelo'] = diccionario['modelo']
         zapatilla['descripcion'] = diccionario['descripcion']
         zapatilla['marca'] = diccionario['marca']
         zapatilla['imagen'] = diccionario['imagen']
-        zapatilla['url'] = self.links[len(self.links)]
+
+        return zapatilla
     
         
