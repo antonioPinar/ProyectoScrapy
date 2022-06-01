@@ -46,8 +46,8 @@ class spiderPrendas(scrapy.Spider):
             #producto['url'] = links[len(self.productos)]
             
             self.productos.append(producto)
-            productoFinal = self.depurar_datos(producto)
 
+        productoFinal = self.depurar_datos(producto)
         yield productoFinal
 
 
