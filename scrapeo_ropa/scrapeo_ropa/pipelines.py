@@ -26,14 +26,14 @@ class ScrapeoRopaPipeline(object):
 
         sql_zapatilla = """
         insert into producto(MARCA, LINEA, MODELO, DESCRIPCION, PRECIO, FECHA_SALIDA, IMAGEN, ID_PAGINA)
-            VALUES('%s', '%s', '%s', '%s', %s, '%s', %s,(select id from pagina where url = %s));
+            VALUES(%s, %s, %s, %s, %s, %s, %s,(select id from pagina where url = %s));
         """
         # Realizar la inserción de datos en la base de datos
-        self.cursor.execute(sql_pagina,("fa"))
+        self.cursor.execute(sql_pagina, item['url'])
         # Enviar, no se puede guardar en la base de datos sin enviar
         
-        self.cursor.execute(sql_zapatilla,(item.get('marca'), item.get('linea'), item.get('modelo'), item.get('descripcion'), item.get('precio'),
-                                            item.get('fecha_salida'), None, "fa"))
+        self.cursor.execute(sql_zapatilla,(item['marca'], item['linea'], item['modelo'], item['descripcion'], item['precio'],
+                                            item['fecha_salida'], item['imagen'], item['url']))
 
         self.conn.commit()
 
