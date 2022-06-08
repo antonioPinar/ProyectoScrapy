@@ -20,16 +20,25 @@ class ScrapeoRopaPipeline(object):
 
     def process_item(self, item, spider):
         # sentencia sql
+        sql_verificar = """
+            select url
+                from pagina
+                where url = %s
+        """
+
         sql_pagina = """
-        insert into pagina(URL) VALUES(%s);
+            insert into pagina(URL) VALUES(%s);
         """
 
         sql_zapatilla = """
-        insert into producto(MARCA, LINEA, MODELO, DESCRIPCION, PRECIO, FECHA_SALIDA, IMAGEN, ID_PAGINA)
-            VALUES(%s, %s, %s, %s, %s, %s, %s,(select id from pagina where url = %s));
+            insert into producto(MARCA, LINEA, MODELO, DESCRIPCION, PRECIO, FECHA_SALIDA, IMAGEN, ID_PAGINA)
+                VALUES(%s, %s, %s, %s, %s, %s, %s,(select id from pagina where url = %s));
         """
+        #comprobamos que no exista la url
+        aux = self.cursor.execute(sql_verificar, item['url'])
         # Realizar la inserción de datos en la base de datos
-        self.cursor.execute(sql_pagina, item['url'])
+        if aux == None:
+            self.cursor.execute(sql_pagina, item['url'])
         # Enviar, no se puede guardar en la base de datos sin enviar
         
         self.cursor.execute(sql_zapatilla,(item['marca'], item['linea'], item['modelo'], item['descripcion'], item['precio'],
