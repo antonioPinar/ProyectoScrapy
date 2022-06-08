@@ -39,11 +39,11 @@ class ScrapeoRopaPipeline(object):
         # Realizar la inserción de datos en la base de datos
         if aux == None:
             self.cursor.execute(sql_pagina, item['url'])
-        # Enviar, no se puede guardar en la base de datos sin enviar
         
-        self.cursor.execute(sql_zapatilla,(item['marca'], item['linea'], item['modelo'], item['descripcion'], item['precio'],
+            self.cursor.execute(sql_zapatilla,(item['marca'], item['linea'], item['modelo'], item['descripcion'], item['precio'],
                                             item['fecha_salida'], item['imagen'], item['url']))
-
+        
+        # Enviar, no se puede guardar en la base de datos sin enviar
         self.conn.commit()
 
 
