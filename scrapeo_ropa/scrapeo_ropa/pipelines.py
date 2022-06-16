@@ -23,7 +23,7 @@ class ScrapeoRopaPipeline(object):
         sql_verificar = """
             select url
                 from pagina
-                where url = %s
+                where url = %s;
         """
 
         sql_pagina = """
@@ -37,7 +37,7 @@ class ScrapeoRopaPipeline(object):
         #comprobamos que no exista la url
         aux = self.cursor.execute(sql_verificar, item['url'])
         # Realizar la inserción de datos en la base de datos
-        if aux == None:
+        if aux == 0:
             self.cursor.execute(sql_pagina, item['url'])
         
             self.cursor.execute(sql_zapatilla,(item['marca'], item['linea'], item['modelo'], item['descripcion'], item['precio'],
