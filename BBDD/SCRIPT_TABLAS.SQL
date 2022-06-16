@@ -39,9 +39,3 @@ UPDATE pagina SET id = @num:=(@num+1);
 
 ALTER TABLE pagina AUTO_INCREMENT = 1;
 
-ALTER TABLE `pagina`
-  DROP PRIMARY KEY,
-   ADD PRIMARY KEY(
-     `ID`,
-     `URL`
-   );
